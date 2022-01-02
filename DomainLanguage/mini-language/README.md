@@ -2,7 +2,7 @@
 
 ## Build
 ```console
-$ make
+make
 ```
 
 ## Use
