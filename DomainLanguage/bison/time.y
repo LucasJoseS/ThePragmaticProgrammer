@@ -1,5 +1,7 @@
 %{
   #include <stdio.h>
+  #include <ctype.h>
+  #include <stdlib.h>
 
   int yylex(void);
   void yyerror(char const*);
@@ -10,7 +12,7 @@
 
 %%
 time:
- time '\n'             { printf("VALID FORMAT. Total minutes  %d\n", $1); }
+ time '\n'                { printf("VALID FORMAT. Total minutes  %d\n", $1); exit(0);}
  ;
 
 time:
@@ -29,11 +31,12 @@ minutes:
  ;
 %%
 
-#include <ctype.h>
-#include <stdlib.h>
-
 int yylex() {
   int c = getchar();
+
+  while(c == ' ') {
+    c = getchar();
+  }
 
   if(isdigit(c)) {
     yylval = c - '0';
