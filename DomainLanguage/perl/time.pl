@@ -17,7 +17,7 @@ sub ampm {
     return 12;
 }
 
-$_ = $ARGV[1] || <>;
+$_ = shift || <>;
 
 _time($1 + ampm($3), $2) if(/(^\d+):(\d\d)(am|pm)/);
 _time($1 + ampm($2), 0) if(/(^\d+)(am|pm)/);
