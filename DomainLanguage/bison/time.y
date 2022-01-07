@@ -16,7 +16,7 @@ time:
  ;
 
 time:
- hour AMPM               { $$ = $1 + $2; }
+ hour AMPM               { if($1 >= 12) yyerror("time exceed the limits"); $$ = $1 + $2; }
  | hour ':' minutes      { if($1 >= 24*60 || $3 >= 60) yyerror("time exceed the limits");  $$ = $1 + $3; }
  | hour ':' minutes AMPM { if($1 >= 12*60 || $3 >= 60) yyerror("time exceed the limits");  $$ = $1 + $3 + $4; }
  ;
