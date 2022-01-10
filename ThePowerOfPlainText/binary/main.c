@@ -1,58 +1,39 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
-#define BOOK_SIZE 256
-#define DIRECT_SIZE 256
-
-typedef enum {
-  Node = 0,
-  Up = 1,
-  Right = 2,
-  Down = 3,
-  Left = 4,
-} direction;
+void help() {
+  printf("Use: main [ g | s ]\n");
+}
 
 typedef struct {
   char name[256];
-  char phone[15];
-  direction direct[256];
-} reg;
+  char phone[20];
+} record;
 
-typedef struct {
-  reg regs[BOOK_SIZE];
-} book;
-
-int main() {
+void generate() {
   FILE *fp = fopen("address.book", "w");
-  reg lucas = { "Lucas José da Silva", "19 1234-1234", {Right, Left, Up, Down}};
-  reg jose  = { "José Lucas da Silva", "19 1234-1234", {Left, Right, Down, Up}};
-  book address = { lucas, jose };
+  record lucas = {"Lucas José da Silva", "11 1234-1234"};
+  record jose = {"José Lucas da Silva", "11 1234-1234"};
 
-  fwrite(&address, sizeof(book), 1, fp);
+  fwrite(&lucas, sizeof(record), 1, fp);
+  fwrite(&jose, sizeof(record), 1, fp);
+}
 
-  fp = fopen("address.book", "r");
-  fread(&address, sizeof(book), 1, fp);
+void show() {
+  FILE *fp = fopen("address.book", "r");
 
-  for(int index = 0; index < BOOK_SIZE; ++index) {
-    bool newline = false;
-    
-    if(strcmp(address.regs[index].name, "")) {
-      printf("%s, %s", address.regs[index].name, address.regs[index].phone);
-      newline = true;
-    }
+  record rec;
+  while(fread(&rec, sizeof(record), 1, fp)) {
+    printf("%s: %s\n",  rec.name, rec.phone);
+  }
+}
 
-    for(int i = 0; i < DIRECT_SIZE; ++i) {
-      switch(address.regs[index].direct[i]) {
-      case Up: printf(" Up"); break;
-      case Right: printf(" Right"); break;
-      case Down: printf(" Down"); break;
-      case Left: printf(" Left"); break;
-      default: printf(""); break;
-      };
-    }
+int main(int argc, char **argv) {
+  if(argc <= 1) { help(); exit(1); }
 
-    if(newline)
-      printf("\n");
+  switch(argv[1][0]) {
+  case 'g': generate(); break;
+  case 's': show(); break;
   }
 }
