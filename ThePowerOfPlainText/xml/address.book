@@ -1,0 +1,13 @@
+<?xml version="1.0" enconding="UTF-8"?>
+<address-book>
+<record>
+	<name> Lucas José da Silva <\name>
+    <phone> 11 1234-1234 <\phone>
+    <directions> North South East Weast <\directions>
+<\record>
+<record>
+	<name> José Lucas da Silva <\name>
+	<phone> 11 1234-1234 <\phone>
+    <directions> North South East Weast <\directions>
+<\record>
+<\address-book>

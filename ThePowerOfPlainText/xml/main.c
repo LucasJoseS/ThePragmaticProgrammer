@@ -19,8 +19,8 @@ void record_print(FILE *fp, char* name, char* phone) {
   fprintf(fp, "<\\record>\n");  
 }
 
-void record_show(char* name, char* phone) {
-  printf("%s %s\n", name, phone);
+void record_show(char* name, char* phone, char* directions) {
+  printf("%s %s %s\n", name, phone, directions);
 }
 
 void generate() {
@@ -53,6 +53,7 @@ void show() {
   FILE *fp = fopen("address.book", "r");
   char *name;
   char *phone;
+  char *direction; 
   char c;
 
   while((c = getc(fp)) != EOF) {
@@ -61,9 +62,12 @@ void show() {
 
       switch(c) {
       case 'n': name = get_value(fp); break;
-      case 'p': phone = get_value(fp); record_show(name, phone); break;
+      case 'p': phone = get_value(fp); break;
+      case 'd': direction = get_value(fp); break;
       }
     }
+
+    if(c == '\\' && getc(fp) == 'r') record_show(name, phone, direction);
   }
 }
 
