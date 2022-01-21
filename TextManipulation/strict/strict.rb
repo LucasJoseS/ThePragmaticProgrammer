@@ -40,4 +40,4 @@ def insert_in_files_of_dir(dirname)
   }
 end
 
-insert_in_files_of_dir("test")
+insert_in_files_of_dir(ARGV[0])
